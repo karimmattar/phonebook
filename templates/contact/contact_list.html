@@ -1,0 +1,45 @@
+{% extends 'contact/base.html' %}
+
+{% block content %}
+    {% for contact in object_list %}
+        <div class="card my-3">
+            <div class="card-body">
+                <p class="text-dark text-start">
+                    <a href="{% url 'contact_view' contact.pk %}">
+                        {{ contact.get_contact_full_name }}
+                    </a>
+                </p>
+            </div>
+        </div>
+    {% empty %}
+        <div class="card my-3">
+            <div class="card-body">
+                <p class="text-dark text-start">
+                    No contacts.
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="container">
+        <footer class="py-3 my-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination nav justify-content-center border-bottom pb-3 mb-3">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item d-flex align-items-center px-2">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <a href="{% url 'contact_add' %}" class="btn btn-primary">
+                Add Contact
+            </a>
+        </footer>
+    </div>
+{% endblock %}

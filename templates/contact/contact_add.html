@@ -1,0 +1,34 @@
+<!-- templates/contact/contact_add.html -->
+{% extends 'contact/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="container py-4">
+                <form method="GET">
+                    <label for="extra" class="form-label">Add Number/s</label>
+                    <input id="extra" type="number" name="extra" value="0" min="0" max="10" minlength="1">
+                    <button type="submit" class="btn btn-primary">Add Number</button>
+                </form>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% crispy form %}
+                <hr/>
+                <div id="phone-numbers">
+                    {{ number_formset.management_form }}
+                    {% for n_form in number_formset %}
+                        {% crispy n_form %}
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-success">Add Contact</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <footer class="py-3 my-4">
+            <a href="{% url 'contact_list' %}" class="btn btn-info">Back to Contact List</a>
+        </footer>
+    </div>
+{% endblock %}

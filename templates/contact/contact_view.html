@@ -1,0 +1,19 @@
+{% extends 'contact/base.html' %}
+
+{% block content %}
+    <div class="card my-3">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">{{ object.get_contact_full_name }}</h6>
+            {% for number in object.contact_numbers.all %}
+                <p class="text-dark text-start">
+                    {{ number.label }}: {{ number.number }}
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <footer class="py-3 my-4">
+            <a href="{% url 'contact_list' %}" class="btn btn-info">Back to Contact List</a>
+        </footer>
+    </div>
+{% endblock %}
